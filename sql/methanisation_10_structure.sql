@@ -1,7 +1,7 @@
-/* METHA V1.0 */
+/* METHANISATION V1.0 */
 /* Creation de la structure des données (schéma, tables, séquences, triggers,...) */
-/* METHA_10_structure.sql */
-/* PstgreSQL/PostGIS */
+/* methanisation_10_structure.sql */
+/* PostgreSQL/PostGIS */
 /* Conseil régional Nouvelle-Aquitaine - https://cartographie.nouvelle-aquitaine.fr/ */
 /* Auteur : Tony VINCENT */
 
