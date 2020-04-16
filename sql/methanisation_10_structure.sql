@@ -57,6 +57,7 @@ CREATE TABLE met_eco.m_eco_methanisation_na_geo
 	date_clefs_debut_construction date,
 	date_clefs_debut_exploitation date,
 	div_commentaires text,
+	date_maj date,
 	geom_valide  boolean DEFAULT false,
 	geom geometry(Point,2154),
     CONSTRAINT m_eco_methanisation_na_geo_pkey PRIMARY KEY (id),
@@ -98,6 +99,7 @@ COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.nrj_injec_valorisee_injecti
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.date_clefs_premier_contrat IS 'Dates clefs : Début de la construction';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.date_clefs_debut_exploitation IS 'Dates clefs : Début de l''exploitation';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.div_commentaires IS 'Divers : Commentaires';
+COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.date_maj IS 'Date de mise à jour';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.geom_valide IS 'Géométrie validée';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.geom IS 'Géométrie point';
 
