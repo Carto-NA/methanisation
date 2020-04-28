@@ -1,6 +1,6 @@
-![picto](img/Logo_nouvelle-aquitaine.png)
+![picto](img/blason_na.png)
 
-# Documentation d'administration de l'application AMENAGEMENT #
+# Documentation d'administration de l'application "Méthan-Action" #
 
 # Généralité
 
