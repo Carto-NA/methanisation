@@ -61,6 +61,8 @@ CREATE TABLE met_eco.m_eco_methanisation_na_geo
 	div_commentaires text,
 	date_import date,
 	date_maj date,
+	x_wgs84 double precision,
+    	y_wgs84 double precision,
 	geom_valide  boolean DEFAULT false,
 	geom geometry(Point,2154),
     CONSTRAINT m_eco_methanisation_na_geo_pkey PRIMARY KEY (id),
@@ -96,7 +98,9 @@ COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.nrj_mode_valorisation IS 'E
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.nrj_biomethane_produit IS 'Energie : Biométhane produit';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.nrj_cog_puissance_elec IS 'Energie : Cogénération/Chaleur - Puissance électrique';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.nrj_cog_elec_injectee IS 'Energie : Cogénération/Chaleur - Electrique injectée';
+COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.nrj_cog_therm_produit IS 'Energie : Cogénération/Chaleur - Thermique produite';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.nrj_cog_therm_valorisee IS 'Energie : Cogénération/Chaleur - Thermique valorisée';
+COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.nrj_cog_taux_therm_valorisee IS 'Energie : Cogénération/Chaleur - Taux Thermique valorisée';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.nrj_injec_debit_bio_injectee IS 'Energie : Injection - Débit biométhane injecté';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.nrj_injec_valorisee_injection IS 'Energie : Injection - Energie valorisée en injection';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.date_clefs_premier_contrat IS 'Dates clefs : Début de la construction';
@@ -104,6 +108,8 @@ COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.date_clefs_debut_exploitati
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.div_commentaires IS 'Divers : Commentaires';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.date_import IS 'Date d''import de la donnée';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.date_maj IS 'Date de mise à jour de la donnée';
+COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.x_wgs84 IS 'Coordonnée X en WGS8';
+COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.y_wgs84 IS 'Coordonnée Y en WGS84';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.geom_valide IS 'Géométrie validée';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.geom IS 'Géométrie point';
 
