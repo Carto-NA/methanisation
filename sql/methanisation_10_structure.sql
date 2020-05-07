@@ -124,3 +124,35 @@ CREATE OR REPLACE VIEW met_eco.m_eco_methanisation_na_count_dept_view AS
 SELECT count(*), loc_numdep from met_eco.m_eco_methanisation_na t1 group by loc_numdep order by loc_numdep ASC;
 
 
+------------------------------------------------------------------------ 
+-- Fonction : Création des fonctions et déclencheurs
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+-- Function : Champs calculés
+CREATE or REPLACE FUNCTION met_eco.fct_m_eco_methanisation_na_geo_update() RETURNS TRIGGER AS $trg_m_eco_methanisation_na_geo_update_row$
+BEGIN
+		-- Attribution du numéro de projet
+		NEW.proj_num := (SELECT MAX(proj_num)+1 FROM met_eco.m_eco_methanisation_na_geo);
+
+		-- Calcul de l'Energie électrique injectée
+		NEW.nrj_cog_elec_injectee := (COALESCE(NEW.nrj_cog_puissance_elec,0)*8000/1000);
+	
+		-- Calcul 
+		--NEW.nrj_primaire_produite := (COALESCE(NEW.nrj_cog_puissance_elec,0)*8000/1000);
+
+		-- Calcul de l'Energie valorisée en injection
+		NEW.nrj_injec_valorisee_injection := ROUND((((COALESCE(NEW.nrj_injec_debit_bio_injectee,0) * 8760) * 10.7)/1000),2);
+
+
+	-- le résultat est ignoré car il s'agit d'un trigger AFTER
+    RETURN NEW; 
+END;
+$trg_m_eco_methanisation_na_geo_update_row$ language plpgsql volatile cost 100;
+
+-- Trigger
+DROP TRIGGER IF EXISTS trg_m_eco_methanisation_na_geo_update_row ON met_eco.m_eco_methanisation_na_geo;
+CREATE TRIGGER trg_m_eco_methanisation_na_geo_update_row
+BEFORE INSERT OR UPDATE ON met_eco.m_eco_methanisation_na_geo
+FOR EACH ROW
+  EXECUTE PROCEDURE met_eco.fct_m_eco_methanisation_na_geo_update();
