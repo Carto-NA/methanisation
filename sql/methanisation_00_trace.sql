@@ -11,3 +11,4 @@
 #################################################################### SUIVI CODE SQL ####################################################################
 2020-03-31 : TV / initialisation du code uniquement
 2020-04-08 : TV / initialisation de la structure de la base de données sur la méthanisation
+2020-05607 : TV / ajout des fonctions et déclencheur pour les champs calculés
