@@ -10,6 +10,6 @@
 ------------------------------------------------------------------------
 
 -- Tables : met_eco.m_eco_methanisation_na
-GRANT ALL ON TABLE met_eco.m_eco_methanisation_na TO "pre-sig-usr";
-GRANT ALL ON TABLE met_eco.m_eco_methanisation_na TO "pre-sig-ro";
-GRANT ALL ON SEQUENCE met_eco.m_eco_methanisation_na_id_seq TO "pre-sig-ro";
+GRANT ALL ON TABLE met_eco.m_eco_methanisation_na_geo TO "pre-sig-usr";
+GRANT ALL ON TABLE met_eco.m_eco_methanisation_na_geo TO "pre-sig-ro";
+GRANT ALL ON SEQUENCE met_eco.m_eco_methanisation_na_geo_id_seq TO "pre-sig-ro";
