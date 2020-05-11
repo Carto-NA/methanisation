@@ -59,6 +59,7 @@ CREATE TABLE met_eco.m_eco_methanisation_na_geo
 	date_clefs_debut_construction date,
 	date_clefs_debut_exploitation date,
 	div_commentaires text,
+	annee_donnees character varying(4),
 	date_import date,
 	date_maj date,
 	x_wgs84 double precision,
@@ -159,19 +160,28 @@ BEGIN
 		new.x_wgs84 := (select ST_X(ST_Transform(new.geom,4326)));
 		new.Y_wgs84 := (select ST_Y(ST_Transform(new.geom,4326)));
 	
-		--
-		--new.numdep := (select numdep from geo.z_commune_na where ST_Intersects(new.geom, geom));
-
+		-- Localisation
+		new.loc_numdep := (select numdep from geo.z_commune_na where ST_Intersects(new.geom, geom));
+		new.loc_numcom := (select numcom from geo.z_commune_na where ST_Intersects(new.geom, geom));
+		new.loc_nomcom := (select nomcom from geo.z_commune_na where ST_Intersects(new.geom, geom));
+		new.loc_code_postal := (SELECT code_postal FROM met_gen.m_gen_codeinsee_code_postaux on archive = false and numcom = new.loc_numcom;);
 		--
 		--new.numcom := (select numcom from geo.z_commune_na where ST_Intersects(new.geom, geom));
 		--new.nomcom := (select nomcom from geo.z_commune_na where ST_Intersects(new.geom, geom));
 	
 		--
-		IF (SELECT date_maj FROM met_eco.m_eco_methanisation_na_geo where proj_num = new.proj_num) is null then
+		IF (TG_OP = 'INSERT') THEN
+			new.date_import := now();
+		END IF;
+							 
+		IF (TG_OP = 'UPDATE') THEN
+			new.date_maj := now();
+		END IF;
+		/*IF (SELECT date_maj FROM met_eco.m_eco_methanisation_na_geo where proj_num = new.proj_num) is null then
 			new.date_import := now();
 		else 
 			new.date_maj := now();
-		end if;
+		end if;*/
 
 
 	-- le résultat est ignoré car il s'agit d'un trigger AFTER
