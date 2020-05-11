@@ -52,7 +52,7 @@ CREATE TABLE met_eco.m_eco_methanisation_na_geo
 	nrj_cog_elec_injectee integer,
 	nrj_cog_therm_produite integer,
 	nrj_cog_therm_valorisee integer,
-	nrj_cog_taux_therm_valorise integer,
+	nrj_cog_taux_therm_valorisee integer,
 	nrj_injec_debit_bio_injectee float8,
 	nrj_injec_valorisee_injection integer,
 	date_clefs_premier_contrat character varying(150),
@@ -99,7 +99,7 @@ COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.nrj_mode_valorisation IS 'E
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.nrj_biomethane_produit IS 'Energie : Biométhane produit';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.nrj_cog_puissance_elec IS 'Energie : Cogénération/Chaleur - Puissance électrique';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.nrj_cog_elec_injectee IS 'Energie : Cogénération/Chaleur - Electrique injectée';
-COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.nrj_cog_therm_produit IS 'Energie : Cogénération/Chaleur - Thermique produite';
+COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.nrj_cog_therm_produite IS 'Energie : Cogénération/Chaleur - Thermique produite';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.nrj_cog_therm_valorisee IS 'Energie : Cogénération/Chaleur - Thermique valorisée';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.nrj_cog_taux_therm_valorisee IS 'Energie : Cogénération/Chaleur - Taux Thermique valorisée';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.nrj_injec_debit_bio_injectee IS 'Energie : Injection - Débit biométhane injecté';
