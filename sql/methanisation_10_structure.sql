@@ -107,6 +107,7 @@ COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.nrj_injec_valorisee_injecti
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.date_clefs_premier_contrat IS 'Dates clefs : Début de la construction';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.date_clefs_debut_exploitation IS 'Dates clefs : Début de l''exploitation';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.div_commentaires IS 'Divers : Commentaires';
+COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.annee_donnees IS 'Année de la données pour l''historisation';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.date_import IS 'Date d''import de la donnée';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.date_maj IS 'Date de mise à jour de la donnée';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.x_wgs84 IS 'Coordonnée X en WGS8';
@@ -195,3 +196,27 @@ CREATE TRIGGER trg_m_eco_methanisation_na_geo_update_row
 BEFORE INSERT OR UPDATE ON met_eco.m_eco_methanisation_na_geo
 FOR EACH ROW
   EXECUTE PROCEDURE met_eco.fct_m_eco_methanisation_na_geo_update();
+
+
+											   
+-----------------------------------------------------------------------------------
+-- Historisation des données, à faire début janvier
+INSERT INTO met_eco.m_eco_methanisation_na_geo (
+	proj_num, proj_nom, proj_methanaqtion, caract_portage_code, caract_portage, caract_type_code, caract_type, 
+	caract_maturite_code, caract_maturite, caract_procede_code, caract_procede, caract_constructeur, 
+	loc_numdep, loc_numcom, loc_nomcom, loc_code_postal, gis_tonnage, gis_majoritaire, gis_part_effluent_elevage, 
+	nrj_primaire_produite, nrj_mode_valorisation, nrj_biomethane_produit, nrj_cog_puissance_elec, nrj_cog_elec_injectee, 
+	nrj_cog_therm_valorisee, nrj_injec_debit_bio_injectee, nrj_injec_valorisee_injection, date_clefs_premier_contrat, 
+	date_clefs_debut_construction, date_clefs_debut_exploitation, div_commentaires, geom_valide, geom, 
+	nrj_cog_taux_therm_valorisee, nrj_cog_therm_produite, x_wgs84, y_wgs84, annee_donnees, date_import, date_maj
+)
+select 
+	proj_num, proj_nom, proj_methanaqtion, caract_portage_code, caract_portage, caract_type_code, caract_type, 
+	caract_maturite_code, caract_maturite, caract_procede_code, caract_procede, caract_constructeur, 
+	loc_numdep, loc_numcom, loc_nomcom, loc_code_postal, gis_tonnage, gis_majoritaire, gis_part_effluent_elevage, 
+	nrj_primaire_produite, nrj_mode_valorisation, nrj_biomethane_produit, nrj_cog_puissance_elec, nrj_cog_elec_injectee, 
+	nrj_cog_therm_valorisee, nrj_injec_debit_bio_injectee, nrj_injec_valorisee_injection, date_clefs_premier_contrat, 
+	date_clefs_debut_construction, date_clefs_debut_exploitation, div_commentaires, geom_valide, geom, 
+	nrj_cog_taux_therm_valorisee, nrj_cog_therm_produite, x_wgs84, y_wgs84, cast(date_part('year', CURRENT_DATE) as varchar), now(), null
+from met_eco.m_eco_methanisation_na_geo;
+											   
