@@ -165,7 +165,7 @@ BEGIN
 		new.loc_numdep := (select numdep from geo.z_commune_na where ST_Intersects(new.geom, geom));
 		new.loc_numcom := (select numcom from geo.z_commune_na where ST_Intersects(new.geom, geom));
 		new.loc_nomcom := (select nomcom from geo.z_commune_na where ST_Intersects(new.geom, geom));
-		new.loc_code_postal := (SELECT code_postal FROM met_gen.m_gen_codeinsee_code_postaux on archive = false and numcom = new.loc_numcom;);
+		new.loc_code_postal := (SELECT code_postal FROM met_gen.m_gen_codeinsee_code_postaux WHERE archive = false and numcom = new.loc_numcom);
 		--
 		--new.numcom := (select numcom from geo.z_commune_na where ST_Intersects(new.geom, geom));
 		--new.nomcom := (select nomcom from geo.z_commune_na where ST_Intersects(new.geom, geom));
