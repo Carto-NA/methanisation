@@ -67,7 +67,7 @@ CREATE TABLE met_eco.m_eco_methanisation_na_geo
 	geom_valide  boolean DEFAULT false,
 	geom geometry(Point,2154),
     CONSTRAINT m_eco_methanisation_na_geo_pkey PRIMARY KEY (id),
-    CONSTRAINT m_eco_methanisation_na_geo_uniq UNIQUE (proj_num)
+    CONSTRAINT m_eco_methanisation_na_geo_uniq UNIQUE (proj_num, annee_donnees)
 );
 
 --
@@ -142,9 +142,12 @@ SELECT count(*), loc_numdep from met_eco.m_eco_methanisation_na t1 group by loc_
 -- Function : Champs calculés
 CREATE or REPLACE FUNCTION met_eco.fct_m_eco_methanisation_na_geo_update() RETURNS TRIGGER AS $trg_m_eco_methanisation_na_geo_update_row$
 BEGIN
-		-- Attribution du numéro de projet
-		NEW.proj_num := (SELECT MAX(proj_num)+1 FROM met_eco.m_eco_methanisation_na_geo);
-
+		--
+		IF (NEW.annee_donnee != cast(date_part('year', CURRENT_DATE) as varchar)) THEN
+			-- Attribution du numéro de projet
+			NEW.proj_num := (SELECT MAX(proj_num)+1 FROM met_eco.m_eco_methanisation_na_geo WHERE annee_donnees = cast(date_part('year', CURRENT_DATE) as varchar));
+		END IF;
+		
 		-- Calcul de l'énergie électrique injectée
 		NEW.nrj_cog_elec_injectee := (COALESCE(NEW.nrj_cog_puissance_elec,0)*8000/1000);
 	
@@ -155,7 +158,7 @@ BEGIN
 		NEW.nrj_injec_valorisee_injection := ROUND((((COALESCE(NEW.nrj_injec_debit_bio_injectee,0) * 8760) * 10.7)/1000),2);
 
 		-- Taux d'énergie thermique valorisée
-		NEW.nrj_cog_taux_therm_valorisee := new.nrj_cog_therm_valorisee / new.nrj_cog_therm_produite;
+		NEW.nrj_cog_taux_therm_valorisee := CASE WHEN nrj_cog_therm_produite IS NULL OR nrj_cog_therm_produite = 0 THEN null ELSE nrj_cog_therm_valorisee / nrj_cog_therm_produite END;
 	
 		-- Création des coordonnées géographique en WGS84
 		new.x_wgs84 := (select ST_X(ST_Transform(new.geom,4326)));
