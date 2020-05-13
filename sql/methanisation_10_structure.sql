@@ -142,8 +142,8 @@ SELECT count(*), loc_numdep from met_eco.m_eco_methanisation_na t1 group by loc_
 -- Function : Champs calculés
 CREATE or REPLACE FUNCTION met_eco.fct_m_eco_methanisation_na_geo_update() RETURNS TRIGGER AS $trg_m_eco_methanisation_na_geo_update_row$
 BEGIN
-		--
-		IF (NEW.annee_donnee != cast(date_part('year', CURRENT_DATE) as varchar)) THEN
+--
+		IF (NEW.annee_donnees is NULL) THEN
 			-- Attribution du numéro de projet
 			NEW.proj_num := (SELECT MAX(proj_num)+1 FROM met_eco.m_eco_methanisation_na_geo WHERE annee_donnees = cast(date_part('year', CURRENT_DATE) as varchar));
 		END IF;
@@ -158,7 +158,7 @@ BEGIN
 		NEW.nrj_injec_valorisee_injection := ROUND((((COALESCE(NEW.nrj_injec_debit_bio_injectee,0) * 8760) * 10.7)/1000),2);
 
 		-- Taux d'énergie thermique valorisée
-		NEW.nrj_cog_taux_therm_valorisee := CASE WHEN nrj_cog_therm_produite IS NULL OR nrj_cog_therm_produite = 0 THEN null ELSE nrj_cog_therm_valorisee / nrj_cog_therm_produite END;
+		NEW.nrj_cog_taux_therm_valorisee := CASE WHEN new.nrj_cog_therm_produite IS NULL OR new.nrj_cog_therm_produite = 0 THEN null ELSE new.nrj_cog_therm_valorisee / new.nrj_cog_therm_produite END;
 	
 		-- Création des coordonnées géographique en WGS84
 		new.x_wgs84 := (select ST_X(ST_Transform(new.geom,4326)));
@@ -169,13 +169,13 @@ BEGIN
 		new.loc_numcom := (select numcom from geo.z_commune_na where ST_Intersects(new.geom, geom));
 		new.loc_nomcom := (select nomcom from geo.z_commune_na where ST_Intersects(new.geom, geom));
 		new.loc_code_postal := (SELECT code_postal FROM met_gen.m_gen_codeinsee_code_postaux WHERE archive = false and numcom = new.loc_numcom);
-	
+
 		--
 		IF (TG_OP = 'INSERT') THEN
 			new.date_import := now();
+			new.annee_donnees := cast(date_part('year', CURRENT_DATE) as varchar);
 		END IF;
-		
-		--
+							 
 		IF (TG_OP = 'UPDATE') THEN
 			new.date_maj := now();
 		END IF;
