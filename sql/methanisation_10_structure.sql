@@ -29,6 +29,7 @@ CREATE TABLE met_eco.m_eco_methanisation_na_geo
 	proj_num integer,
 	proj_nom character varying(255),
 	proj_methanaqtion boolean,
+	proj_date_mise_service date,
 	caract_portage_code character varying(9),
 	caract_portage character varying(150),
 	caract_type_code character varying(9),
@@ -78,6 +79,7 @@ COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.id IS 'Identifiant';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.proj_num IS 'Projet : Numéro';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.proj_nom IS 'Projet : Nom du porteur ou société porteuse';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.proj_methanaqtion IS 'Projet : Plan MéthaN-Action';
+COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.proj_methanaqtion IS 'Projet : Date de mise en service';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.caract_portage_code IS 'Caractérisitique : Code portage';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.caract_portage IS 'Caractérisitique : Portage';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.caract_type_code IS 'Caractérisitique : Code type';
