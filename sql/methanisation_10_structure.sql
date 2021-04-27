@@ -51,7 +51,6 @@ CREATE TABLE met_eco.m_eco_methanisation_na_geo
 	nrj_biomethane_produit integer,
 	nrj_cog_puissance_elec integer,
 	nrj_cog_elec_injectee integer,
-	nrj_cog_therm_produite integer,
 	nrj_cog_therm_valorisee integer,
 	nrj_cog_taux_therm_valorisee integer,
 	nrj_injec_debit_bio_injectee float8,
@@ -117,6 +116,15 @@ COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.y_wgs84 IS 'Coordonnée Y e
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.geom_valide IS 'Géométrie validée';
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.geom IS 'Géométrie point';
 
+-- Suppression de champ
+ALTER TABLE met_eco.m_eco_methanisation_na_geo DROP COLUMN nrj_cog_therm_produite;
+
+-- Création de champ
+ALTER TABLE met_eco.m_eco_methanisation_na_geo ADD emergence_cmem boolean NULL DEFAULT false;
+
+-- Modification champ
+ALTER TABLE met_eco.m_eco_methanisation_na_geo RENAME COLUMN date_clefs_debut_exploitation TO date_realisation_etude_op;
+COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.date_realisation_etude_op IS 'Dates : réalisation étude opportunité';
 
 ------------------------------------------------------------------------ 
 -- Vues : Création des vues
