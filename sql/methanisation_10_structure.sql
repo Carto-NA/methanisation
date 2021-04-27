@@ -126,6 +126,17 @@ ALTER TABLE met_eco.m_eco_methanisation_na_geo ADD emergence_cmem boolean NULL D
 ALTER TABLE met_eco.m_eco_methanisation_na_geo RENAME COLUMN date_clefs_debut_exploitation TO date_realisation_etude_op;
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.date_realisation_etude_op IS 'Dates : réalisation étude opportunité';
 
+
+update met_eco.m_eco_methanisation_na_geo
+set nrj_injec_valorisee_injection = ROUND(((COALESCE(nrj_injec_debit_bio_injectee,0) * 9.42) * 8550),2);
+
+/*select nrj_injec_valorisee_injection, (ROUND(((COALESCE(nrj_injec_debit_bio_injectee,0) * 9.42) * 8550),2)) as new_column
+from met_eco.m_eco_methanisation_na_geo;*/
+
+update met_eco.m_eco_methanisation_na_geo
+set nrj_biomethane_produit = null ;
+
+
 ------------------------------------------------------------------------ 
 -- Vues : Création des vues
 ------------------------------------------------------------------------
@@ -160,15 +171,13 @@ BEGIN
 		
 		-- Calcul de l'énergie électrique injectée
 		NEW.nrj_cog_elec_injectee := (COALESCE(NEW.nrj_cog_puissance_elec,0)*8000/1000);
-	
-		-- Calcul de l'énergie thermique produite
-		NEW.nrj_cog_therm_produite := (COALESCE(NEW.nrj_cog_puissance_elec,0)*8000/1000);
 
 		-- Calcul de l'Energie valorisée en injection
-		NEW.nrj_injec_valorisee_injection := ROUND((((COALESCE(NEW.nrj_injec_debit_bio_injectee,0) * 8760) * 10.7)/1000),2);
+		--NEW.nrj_injec_valorisee_injection := ROUND((((COALESCE(NEW.nrj_injec_debit_bio_injectee,0) * 8760) * 10.7)/1000),2);
+		NEW.nrj_injec_valorisee_injection := ROUND(((COALESCE(NEW.nrj_injec_debit_bio_injectee,0) * 9.42) * 8550),2);
 
 		-- Taux d'énergie thermique valorisée
-		NEW.nrj_cog_taux_therm_valorisee := CASE WHEN new.nrj_cog_therm_produite IS NULL OR new.nrj_cog_therm_produite = 0 THEN null ELSE new.nrj_cog_therm_valorisee / new.nrj_cog_therm_produite END;
+		--NEW.nrj_cog_taux_therm_valorisee := CASE WHEN new.nrj_cog_therm_produite IS NULL OR new.nrj_cog_therm_produite = 0 THEN null ELSE new.nrj_cog_therm_valorisee / new.nrj_cog_therm_produite END;
 	
 		-- Création des coordonnées géographique en WGS84
 		new.x_wgs84 := (select ST_X(ST_Transform(new.geom,4326)));
