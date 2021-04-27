@@ -53,7 +53,7 @@ CREATE TABLE met_eco.m_eco_methanisation_na_geo
 	nrj_cog_elec_injectee integer,
 	nrj_cog_therm_valorisee integer,
 	nrj_cog_taux_therm_valorisee integer,
-	nrj_injec_debit_bio_injectee float8,
+	nrj_injec_debit_bio_injectee integer,
 	nrj_injec_valorisee_injection integer,
 	date_clefs_premier_contrat character varying(150),
 	date_clefs_debut_construction date,
@@ -118,6 +118,7 @@ COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.geom IS 'Géométrie point'
 
 -- Suppression de champ
 ALTER TABLE met_eco.m_eco_methanisation_na_geo DROP COLUMN nrj_cog_therm_produite;
+ALTER TABLE met_eco.m_eco_methanisation_na_geo DROP COLUMN nrj_cog_taux_therm_valorisee;
 
 -- Création de champ
 ALTER TABLE met_eco.m_eco_methanisation_na_geo ADD emergence_cmem boolean NULL DEFAULT false;
@@ -134,7 +135,8 @@ set nrj_injec_valorisee_injection = ROUND(((COALESCE(nrj_injec_debit_bio_injecte
 from met_eco.m_eco_methanisation_na_geo;*/
 
 update met_eco.m_eco_methanisation_na_geo
-set nrj_biomethane_produit = null ;
+set nrj_biomethane_produit = null 
+where proj_nom != 'aaa';
 
 
 ------------------------------------------------------------------------ 
