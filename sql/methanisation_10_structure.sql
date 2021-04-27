@@ -126,6 +126,9 @@ ALTER TABLE met_eco.m_eco_methanisation_na_geo ADD emergence_cmem boolean NULL D
 -- Modification champ
 ALTER TABLE met_eco.m_eco_methanisation_na_geo RENAME COLUMN date_clefs_debut_exploitation TO date_realisation_etude_op;
 COMMENT ON COLUMN met_eco.m_eco_methanisation_na_geo.date_realisation_etude_op IS 'Dates : réalisation étude opportunité';
+ALTER TABLE met_eco.m_eco_methanisation_na_geo ALTER COLUMN date_clefs_premier_contrat TYPE varchar(255) USING date_clefs_premier_contrat::varchar;
+ALTER TABLE met_eco.m_eco_methanisation_na_geo RENAME COLUMN date_clefs_premier_contrat TO premier_contrat_nom;
+
 
 
 update met_eco.m_eco_methanisation_na_geo
