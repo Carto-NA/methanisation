@@ -219,7 +219,7 @@ FOR EACH ROW
 
 											   
 -----------------------------------------------------------------------------------
--- Historisation des données, à faire début janvier
+-- Historisation des données, à faire début janvier (2021)
 INSERT INTO met_eco.m_eco_methanisation_na_geo (
 	proj_num, proj_nom, proj_methanaqtion, caract_portage_code, caract_portage, caract_type_code, caract_type, 
 	caract_maturite_code, caract_maturite, caract_procede_code, caract_procede, caract_constructeur, 
@@ -239,7 +239,7 @@ select
 	nrj_cog_taux_therm_valorisee, nrj_cog_therm_produite, x_wgs84, y_wgs84, cast(date_part('year', CURRENT_DATE) as varchar), now(), null
 from met_eco.m_eco_methanisation_na_geo where annee_donnees = cast(date_part('year', CURRENT_DATE)-1 as varchar);
 											   
---
+-- Historisation des données, à faire début janvier (2022)
 INSERT INTO met_eco.m_eco_methanisation_na_geo (
 	proj_num, proj_nom, proj_methanaqtion, caract_portage_code, caract_portage, caract_type_code, caract_type, 
 	caract_maturite_code, caract_maturite, caract_procede_code, caract_procede, caract_constructeur, 
